@@ -15,26 +15,11 @@ pipeline {
                 sh 'docker-compose down -v'
                 sh 'rm -rf ./master/data/*'
                 sh 'rm -rf ./slave/data/*'
+                
+                // Clean up any remaining resources or perform additional cleanup steps here
+                // For example:
+                sh 'docker network prune -f'
             }
-        }
-    }
-
-    post {
-        success {
-            cleanUp()
-        }
-        failure {
-            cleanUp()
-        }
-    }
-}
-
-def cleanUp() {
-    stage('Cleanup') {
-        steps {
-            // Clean up any remaining resources or perform additional cleanup steps here
-            // For example:
-            sh 'docker network prune -f'
         }
     }
 }
