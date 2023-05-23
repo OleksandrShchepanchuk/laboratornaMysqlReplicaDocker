@@ -4,6 +4,7 @@ pipeline {
     stages {
         stage('Build and Deploy') {
             steps {
+                sh "docker build -t image ."
                 sh './build.sh'
             }
         }
@@ -15,9 +16,6 @@ pipeline {
                 sh 'docker-compose down -v'
                 sh 'rm -rf ./master/data/*'
                 sh 'rm -rf ./slave/data/*'
-                
-                // Clean up any remaining resources or perform additional cleanup steps here
-                // For example:
                 sh 'docker network prune -f'
             }
         }
